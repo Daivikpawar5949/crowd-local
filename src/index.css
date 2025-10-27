@@ -1,0 +1,177 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.6%;
+    
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.6%;
+    
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.6%;
+    
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+    
+    --accent: 280.7 70.8% 56.1%;
+    --accent-foreground: 0 0% 100%;
+    
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+    
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 280.7 70.8% 56.1%;
+    
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    
+    /* Color variables for gradients */
+    --color-primary: #7F00FF;
+    --color-secondary: #00FF7F;
+    --color-chart-1: hsl(var(--chart-1));
+    --color-chart-3: hsl(var(--chart-3));
+    --color-chart-4: hsl(var(--chart-4));
+    --color-chart-5: hsl(var(--chart-5));
+    --color-destructive: hsl(var(--destructive));
+    --color-accent: hsl(var(--accent));
+  }
+
+  .dark {
+    --background: 0 0% 3.6%;
+    --foreground: 0 0% 98.2%;
+    
+    --card: 0 0% 8.5%;
+    --card-foreground: 0 0% 98.2%;
+    
+    --popover: 0 0% 8.5%;
+    --popover-foreground: 0 0% 98.2%;
+    
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+    
+    --accent: 280.7 70.8% 56.1%;
+    --accent-foreground: 0 0% 8.5%;
+    
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98.2%;
+    
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 280.7 70.8% 56.1%;
+    
+    --chart-1: 220 13% 91%;
+    --chart-2: 217 32% 17%;
+    --chart-3: 12 76% 61%;
+    --chart-4: 212 35% 21%;
+    --chart-5: 172 58% 39%;
+  }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+}
+
+/* Glass Input Styles */
+.glass-input-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+.glass-input {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  height: 52px;
+  padding: 0 12px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px) saturate(200%);
+  -webkit-backdrop-filter: blur(10px) saturate(200%);
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+  transition: all 0.3s ease;
+}
+
+.glass-input:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.glass-input:focus-within {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(127, 0, 255, 0.5);
+  box-shadow: 0 8px 32px rgba(127, 0, 255, 0.2);
+}
+
+.glass-input-text-area {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/* Glass Button Styles */
+.glass-button-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+.glass-button {
+  position: relative;
+  padding: 12px 24px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 24px;
+  background: rgba(127, 0, 255, 0.2);
+  backdrop-filter: blur(10px) saturate(200%);
+  -webkit-backdrop-filter: blur(10px) saturate(200%);
+  color: hsl(var(--foreground));
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 32px rgba(127, 0, 255, 0.1);
+}
+
+.glass-button:hover {
+  background: rgba(127, 0, 255, 0.3);
+  border-color: rgba(127, 0, 255, 0.5);
+  box-shadow: 0 8px 32px rgba(127, 0, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.glass-button:active {
+  transform: translateY(0);
+}
+
+.glass-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.glass-button-shadow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(127, 0, 255, 0.1) 0%, transparent 70%);
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.glass-button:hover .glass-button-shadow {
+  opacity: 1;
+}
