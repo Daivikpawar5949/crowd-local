@@ -6,6 +6,11 @@ import Dashboard from './pages/Dashboard'
 
 const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5001'
 
+// Debug: Log API base and environment
+console.log('📡 API Base:', API_BASE)
+console.log('📡 Environment:', import.meta.env.MODE)
+console.log('📡 All Env Vars:', import.meta.env)
+
 export default function App() {
   const [currentPage, setCurrentPage] = useState('landing') // 'landing', 'sign-up', 'sign-in', 'dashboard'
   const [user, setUser] = useState(null)
