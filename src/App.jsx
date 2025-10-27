@@ -21,9 +21,15 @@ export default function App() {
 
       if (savedToken) {
         try {
+          const controller = new AbortController()
+          const timeoutId = setTimeout(() => controller.abort(), 5000) // 5 second timeout
+          
           const res = await fetch(`${API_BASE}/api/auth/me`, {
             headers: { Authorization: `Bearer ${savedToken}` },
+            signal: controller.signal,
           })
+          clearTimeout(timeoutId)
+          
           if (!res.ok) throw new Error('Invalid token')
           const userData = await res.json()
           if (!mounted) return
@@ -59,11 +65,16 @@ export default function App() {
 
   const handleSignUp = async (name, email, password) => {
     try {
+      const controller = new AbortController()
+      const timeoutId = setTimeout(() => controller.abort(), 10000) // 10 second timeout
+      
       const response = await fetch(`${API_BASE}/api/auth/signup`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, password }),
+        signal: controller.signal,
       })
+      clearTimeout(timeoutId)
       
       const data = await response.json()
       
@@ -82,17 +93,25 @@ export default function App() {
       console.log('✅ Signup successful:', data.user)
     } catch (error) {
       console.error('❌ Signup error:', error.message)
+      if (error.name === 'AbortError') {
+        throw new Error('Backend not responding. Please try again or check backend deployment.')
+      }
       throw error
     }
   }
 
   const handleSignIn = async (email, password) => {
     try {
+      const controller = new AbortController()
+      const timeoutId = setTimeout(() => controller.abort(), 10000) // 10 second timeout
+      
       const response = await fetch(`${API_BASE}/api/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
+        signal: controller.signal,
       })
+      clearTimeout(timeoutId)
       
       const data = await response.json()
       
@@ -111,6 +130,9 @@ export default function App() {
       console.log('✅ Login successful:', data.user)
     } catch (error) {
       console.error('❌ Login error:', error.message)
+      if (error.name === 'AbortError') {
+        throw new Error('Backend not responding. Please try again or check backend deployment.')
+      }
       throw error
     }
   }

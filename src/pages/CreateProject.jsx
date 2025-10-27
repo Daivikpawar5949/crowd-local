@@ -53,6 +53,9 @@ export const CreateProject = ({ user, token, onSuccess, onClose }) => {
     }
 
     try {
+      const controller = new AbortController()
+      const timeoutId = setTimeout(() => controller.abort(), 10000) // 10 second timeout
+      
       const response = await fetch(`${API_BASE}/api/projects`, {
         method: 'POST',
         headers: {
@@ -66,8 +69,10 @@ export const CreateProject = ({ user, token, onSuccess, onClose }) => {
           goal: parseInt(formData.goal),
           daysRemaining: parseInt(formData.daysRemaining),
           category: formData.category
-        })
+        }),
+        signal: controller.signal,
       })
+      clearTimeout(timeoutId)
 
       const data = await response.json()
 
@@ -80,7 +85,11 @@ export const CreateProject = ({ user, token, onSuccess, onClose }) => {
       onClose()
     } catch (err) {
       console.error('❌ Create project error:', err.message)
-      setError(err.message)
+      if (err.name === 'AbortError') {
+        setError('Backend not responding. Please check your internet and try again.')
+      } else {
+        setError(err.message)
+      }
     } finally {
       setLoading(false)
     }
